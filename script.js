@@ -1,27 +1,63 @@
-const aboutText ="Fundada em 1926 (fusão da Daimler-Motoren-Gesellschaft e Benz & Cie).";
-const aboutElement = document.querySelector('#about p');
-let index = 0;
+const sectionTexts = {
+    produtos: [
+        "Fundada em 1926 (fusão da Daimler-Motoren-Gesellschaft e Benz & Cie).",
+        "Criou o primeiro automóvel movido a gasolina (Karl Benz, 1886).",
+        "Marca reconhecida mundialmente pelo luxo, inovação e segurança."
+    ],
+    interior: [
+        "A Mercedes investe em digitalização e equipes híbridas.",
+        "Fábricas inteligentes utilizam tecnologia avançada para otimizar a produção."
+    ],
+    exterior: [
+        "Trabalho remoto e integração global são prioridades.",
+        "Fornecedores conectados garantem eficiência na cadeia de suprimentos."
+    ],
+    digital: [
+        "A Mercedes se enquadra na era digital com inovação constante.",
+        "Uso de tecnologias digitais para melhorar produtos e processos."
+    ],
+    global: [
+        "Presença global em diversos continentes.",
+        "Organização estruturada para atender mercados locais e globais."
+    ],
+    geografia: [
+        "Conceitos de globalização, território e meio ambiente são aplicados.",
+        "Mobilidade de pessoas e tecnologias é fundamental para a empresa."
+    ]
+};
 
-const aboutText   = "Criou-se o primeiro automóvel movido a gasolina (Karl Benz, 1886).";
-const aboutElement = document.querySelector('#about p');
-let index = 0;
-
-const aboutText = "Marca reconhecida mundialmente pelo luxo, inovação e segurança.";
-const aboutElement = document.querySelector('#about p');
-let index = 0;
-
-function typeWriter() {
-    if (index < aboutText.length) {
-        aboutElement.textContent += aboutText.charAt(index);
-        index++;
-        setTimeout(typeWriter, 50);
+function typeWriter(element, texts, index = 0, charIndex = 0) {
+    if (index >= texts.length) return;
+    if (charIndex < texts[index].length) {
+        element.textContent += texts[index].charAt(charIndex);
+        setTimeout(() => typeWriter(element, texts, index, charIndex + 1), 50);
+    } else {
+        element.textContent += '\n';
+        setTimeout(() => {
+            element.textContent += '\n';
+            typeWriter(element, texts, index + 1, 0);
+        }, 500);
     }
 }
 
-// Start typing animation when page loads
-window.addEventListener('load', () => {
-    aboutElement.textContent = '';
-    typeWriter();
+document.querySelectorAll('.start-typing-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        const section = button.getAttribute('data-section');
+        const sectionElement = document.getElementById(section);
+        const imgElement = sectionElement.querySelector('.section-img');
+        const textContainer = sectionElement.querySelector('.typing-text');
+
+        // Hide all images and clear all typing-texts first
+        document.querySelectorAll('.section-img').forEach(img => img.style.display = 'none');
+        document.querySelectorAll('.typing-text').forEach(text => text.textContent = '');
+
+        if (imgElement) {
+            imgElement.style.display = 'block';
+        }
+        if (textContainer) {
+            typeWriter(textContainer, sectionTexts[section]);
+        }
+    });
 });
 
 // Mobile menu toggle
