@@ -117,7 +117,7 @@ nav ul li a:hover {
 
 section {
     padding: 2rem 1rem;
-    max-width: 1100px;
+    max-width: 900px;
     margin: 0 auto 2rem auto;
     background: rgba(51, 51, 51, 0.8); /* Dark gray */
     backdrop-filter: blur(10px);
@@ -126,8 +126,20 @@ section {
     border: 1px solid #C0C0C0; /* Silver border */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
-    gap: 20px;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Make section children stack vertically so title is above image and text */
+#produtos {
+    flex-direction: column;
+}
+
+#produtos .section-img {
+    max-width: 400px !important;
+    float: none !important;
+    margin: 0 auto !important;
 }
 
 section:hover {
@@ -141,7 +153,7 @@ section:hover {
 }
 
 .section-img {
-    max-width: 300px !important;
+    max-width: 600px !important;
     height: auto !important;
     border-radius: 10px;
     object-fit: contain;
